@@ -34,7 +34,7 @@ ezie.gui.config.bind.tool_select = function(selection, options) {
 
 ezie.gui.config.bind.set_tool_select = function(selection, options, wm) {
     ezie.gui.config.bind.select_method_has_changed = true;
-
+    
     var settings = {
         onSelect: ezie.gui.selection().set,
         onChange: ezie.gui.selection().set
@@ -93,14 +93,26 @@ ezie.gui.config.bind.tool_select_method = function( e ) {
     var selectMethod = $('#optsSelect input[type="radio"]:checked:first').val();
     var selectWidth = $('#optsSelect input[type="text"][name="selection_width"]:first').val();
     var selectHeight = $('#optsSelect input[type="text"][name="selection_height"]:first').val();
-
+    var selectDimension = $('#optsSelect input[type="radio"][name="selection_dimension"]:checked:first').val();
+    
     var settings = {
         onSelect: ezie.gui.selection().set,
         onChange: ezie.gui.selection().set
     };
     var dims = null;
 
+    if (selectDimension != null)
+	{
+    	selectMethod = 'ratio';
+    	var tmpDimensions = selectDimension.split("x");
+    	selectWidth  = tmpDimensions[0];
+    	selectHeight = tmpDimensions[1];
+    	$("#selection_width").val(selectWidth);
+    	$("#selection_height").val(selectHeight);
+    	
+    }
     $.log('selection method: ' + selectMethod);
+    $.log('selection dimension: ' + selectDimension);
     $.log('   w: ' + selectWidth);
     $.log('   h: ' + selectHeight);
 

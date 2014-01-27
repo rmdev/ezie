@@ -114,15 +114,26 @@
 
                             <fieldset>
                                 <legend>{'Dimensions'|i18n('design/standard/ezie')}</legend>
-                                <input type="text" name="selection_width" value="100" /> x
-                                <input type="text" name="selection_height" value="100" />
+                                <input type="text" name="selection_width" value="100" id="selection_width" /> x
+                                <input type="text" name="selection_height" value="100" id="selection_height" />
                             </fieldset>
 
                             <ul class="box-content">
                                 <li><input type="radio" name="selection_type" value="ratio" id="selection_type_ratio" /><label for="selection_type_ratio">{'Keep ratio'|i18n('design/standard/ezie')}</label></li>
                                 <li><input type="radio" name="selection_type" value="free" id="selection_type_free" checked="checked" /><label for="selection_type_free">{'Free'|i18n('design/standard/ezie')}</label></li>
                             </ul>
-
+                            
+                            {def $dimensions = ezini('eZIE', 'dimensions', 'image.ini')
+                                 $dimensionsNames = ezini('eZIE', 'dimensionsNames', 'image.ini')
+                            }
+                            {if $dimensions|count()}
+                            <hr/>
+                            <ul class="box-content">
+                                {foreach $dimensions as $k => $dim}
+                                    <li><input type="radio" name="selection_dimension" value="{$dim}" id="selection_dimension_{$k}" /><label for="selection_dimension_{$k}">{$dimensionsNames[$k]} ({$dim})</label></li>
+                                {/foreach}
+                            </ul>
+                            {/if}
                             <div id="optsCrop" class="opts">
                                 <button class="submit">{'Crop'|i18n('design/standard/ezie')}</button>
                             </div>
